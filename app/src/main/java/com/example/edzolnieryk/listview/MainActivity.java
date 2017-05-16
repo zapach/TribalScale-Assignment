@@ -230,7 +230,7 @@ public class MainActivity extends AppCompatActivity {
     {
         // Now create Object
 
-        numDataItems = 0;
+        //numDataItems = 0;
 
         try {
             testJObject = new JSONObject(testString);
@@ -354,7 +354,6 @@ public class MainActivity extends AppCompatActivity {
         new FetchDataAsync().execute();
         Log.e("DEBUG", "Fetch Data button clicked");
 
-        populatelistView(MAIN_SCREEN);
     }
 
     public void returnToMainButtonClicked(View v) {
@@ -463,10 +462,14 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String result) {
             Log.e("DEBUG", "FetchDataAsync PostExecute");
+
+            // always hated doing this, need to run on main thread...
+
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
                     createJSON(httpData);
+                    populatelistView(MAIN_SCREEN);
                 }
             });
 
